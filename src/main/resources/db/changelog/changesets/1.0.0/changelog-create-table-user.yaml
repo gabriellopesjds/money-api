@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user
+      author: Gabriel Lopes
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: binary(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+        - insert:
+            tableName: user
+            dbms: 'mysql'
+            columns:
+              - column:
+                  name: id
+                  valueComputed: unhex(replace(uuid(),'-',''))
+              - column:
+                  name: username
+                  value: ADMIN
+              - column:
+                  name: password
+                  value: $2a$10$0eq8V69Wj0mrerWxmq/Eyu/uJIzbECLabjHR1rzw.tLs8tNO8p8fG
+              - column:
+                  name: status
+                  value: ACTIVE

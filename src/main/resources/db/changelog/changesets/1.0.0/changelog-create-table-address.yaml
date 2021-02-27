@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-address
+      author: Gabriel Lopes
+      changes:
+        - createTable:
+            tableName: address
+            columns:
+              - column:
+                  name: id
+                  type: binary(16)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: address_pk
+                    nullable: false
+              - column:
+                  name: public_place
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: complement
+                  type: varchar(255)
+              - column:
+                  name: district
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cep
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: state
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: person_id
+                  type: binary(16)
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: person_id
+            baseTableName: address
+            constraintName: fk_address_to_person_id
+            referencedColumnNames: id
+            referencedTableName: person
+
+

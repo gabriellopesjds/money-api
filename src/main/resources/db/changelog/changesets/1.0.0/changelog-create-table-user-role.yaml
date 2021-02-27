@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user-role
+      author: Gabriel Lopes
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: binary(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: binary(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_role
+            constraintName: fk_user_role_to_user_id
+            referencedColumnNames: id
+            referencedTableName: user
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: user_role
+            constraintName: fk_user_role_to_role_id
+            referencedColumnNames: id
+            referencedTableName: role
+        - insert:
+            tableName: user_role
+            dbms: 'mysql'
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (select user.id from user where username = 'ADMIN')
+              - column:
+                  name: role_id
+                  valueComputed: (select role.id from role where name_role = 'ADMIN')
